@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/v1', 'App\Http\Controllers\APIController@index');
-Route::get('/v1/list-area', 'App\Http\Controllers\APIController@getListArea');
+Route::get('/v1/list-area/{map_id}', 'App\Http\Controllers\APIController@getListArea');
 Route::get('/v1/detail/{id}', 'App\Http\Controllers\APIController@show');
 Route::post('/v1/add-area', 'App\Http\Controllers\APIController@createArea');
 Route::put('/v1/update-area', 'App\Http\Controllers\APIController@updateArea');

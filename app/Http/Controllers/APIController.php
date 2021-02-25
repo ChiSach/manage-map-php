@@ -51,7 +51,7 @@ class APIController extends Controller
             'acreage' => $request->acreage,
         ]);
         if ($update) {
-            $areas = Areas::get();
+            $areas = Areas::where('id', $request->id)->get();
             return response()->json(['success' => 'Successfully', 'listAreas' => $areas], 200);
         }
         return  response()->json(['error' => '500'], 500);
@@ -153,9 +153,9 @@ class APIController extends Controller
         //
     }
 
-    public function getListArea()
+    public function getListArea($map_id)
     {
-        $listArea = Areas::get();
+        $listArea = Areas::where('map_id', $map_id)->get();
         return response()->json(['success' => 'Successfully', "listArea" => $listArea], 200);
     }
 
