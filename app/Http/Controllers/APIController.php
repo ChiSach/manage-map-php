@@ -45,17 +45,16 @@ class APIController extends Controller
             return  response()->json(['title' => $validator->fails()], 422);
         }
         $update = Areas::where('id', $request->id)
-        ->update([
-            'title' => $request->title,
-            'perimeter' => $request->perimeter,
-            'acreage' => $request->acreage,
-        ]);
+            ->update([
+                'title' => $request->title,
+                'perimeter' => $request->perimeter,
+                'acreage' => $request->acreage,
+            ]);
         if ($update) {
             $areas = Areas::where('id', $request->id)->get();
             return response()->json(['success' => 'Successfully', 'listAreas' => $areas], 200);
         }
         return  response()->json(['error' => '500'], 500);
-
     }
 
     public function createArea(Request $request)
@@ -67,7 +66,7 @@ class APIController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return  response()->json(['title' => $validator->fails()], 422);
+            return  response()->json(['error' => $validator->fails()], 422);
         }
 
         $area = new Areas;
@@ -76,7 +75,8 @@ class APIController extends Controller
         $area->coordinatesSVG = $request->coordinatesSVG;
         $saved = $area->save();
         if ($saved) {
-            return response()->json(['success' => 'Successfully'], 200);
+            $listArea = Areas::where('map_id', $request->map_id)->get();
+            return response()->json(['success' => 'Successfully', 'data' => $listArea ], 200);
         }
         return  response()->json(['error' => '500'], 500);
     }
@@ -169,6 +169,19 @@ class APIController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function removeArea($id_area)
+    {
+        try {
+            $area = Areas::find($id_area);
+            $map_id = $area->map_id;
+            $area->delete();
+            $listArea = Areas::where('map_id', $map_id)->get();
+            return response()->json(['success' => 'Successfully', "data" => $listArea], 200);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e], 404);
+        }
     }
 
     /**

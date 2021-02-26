@@ -20,6 +20,7 @@ Route::get('/v1/detail/{id}', 'App\Http\Controllers\APIController@show');
 Route::post('/v1/add-area', 'App\Http\Controllers\APIController@createArea');
 Route::put('/v1/update-area', 'App\Http\Controllers\APIController@updateArea');
 Route::post('/v1/upload-image', 'App\Http\Controllers\APIController@store');
+Route::delete('/v1/remove-area/{id_area}', 'App\Http\Controllers\APIController@removeArea');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
