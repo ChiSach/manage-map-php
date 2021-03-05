@@ -42,7 +42,7 @@ class APIController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return  response()->json(['title' => $validator->fails()], 422);
+            return  response()->json(['error' => 'Error'], 422);
         }
         $update = Areas::where('id', $request->id)
             ->update([
@@ -54,7 +54,7 @@ class APIController extends Controller
             $areas = Areas::where('id', $request->id)->get();
             return response()->json(['success' => 'Successfully', 'listAreas' => $areas], 200);
         }
-        return  response()->json(['error' => '500'], 500);
+        return  response()->json(['error' => 'Error 500'], 500);
     }
 
     public function createArea(Request $request)
@@ -66,7 +66,7 @@ class APIController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return  response()->json(['error' => $validator->fails()], 422);
+            return  response()->json(['error' => 'Error'], 422);
         }
 
         $area = new Areas;
@@ -78,7 +78,7 @@ class APIController extends Controller
             $listArea = Areas::where('map_id', $request->map_id)->get();
             return response()->json(['success' => 'Successfully', 'data' => $listArea ], 200);
         }
-        return  response()->json(['error' => '500'], 500);
+        return  response()->json(['error' => 'Error 500'], 500);
     }
 
     /**
@@ -98,7 +98,7 @@ class APIController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return  response()->json($validator->errors(), 422);
+                return  response()->json(['error' => 'Error'], 422);
             }
 
             $uploadFolder = 'maps';
@@ -115,7 +115,7 @@ class APIController extends Controller
                 $saved = $maps->save();
                 if (!$saved) {
                     Storage::delete("public/" . $imageName);
-                    return  response()->json(['error' => '500'], 500);
+                    return  response()->json(['error' => 'Error 500'], 500);
                 }
                 $mapsdata = Maps::get();
                 return response()->json(['success' => 'Successfully', "dataMaps" => $mapsdata], 200);
@@ -138,7 +138,7 @@ class APIController extends Controller
             $map = Maps::where('id', $id)->get();
             return response()->json(['success' => 'Successfully', "dataMap" => $map], 200);
         } catch (\Throwable $th) {
-            return response()->json(['Error' => "error"], 404);
+            return response()->json(['error' => 'Error'], 404);
         }
     }
 
