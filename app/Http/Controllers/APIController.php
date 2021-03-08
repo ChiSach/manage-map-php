@@ -57,6 +57,20 @@ class APIController extends Controller
         return  response()->json(['error' => 'Error 500'], 500);
     }
 
+
+    public function updateAreaCoordinatesSVG(Request $request)
+    {
+        $update = Areas::where('id', $request->id)
+            ->update([
+                'coordinatesSVG' => $request->coordinatesSVG
+            ]);
+        if ($update) {
+            $areas = Areas::where('id', $request->id)->get();
+            return response()->json(['success' => 'Successfully', 'listAreas' => $areas], 200);
+        }
+        return  response()->json(['error' => 'Error 500'], 500);
+    }
+
     public function createArea(Request $request)
     {
         $validator = Validator::make($request->all(), [
