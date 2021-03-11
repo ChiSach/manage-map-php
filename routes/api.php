@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::get('/v1', 'App\Http\Controllers\APIController@index');
 Route::get('/v1/list-area/{map_id}', 'App\Http\Controllers\APIController@getListArea');
 Route::get('/v1/detail/{id}', 'App\Http\Controllers\APIController@show');

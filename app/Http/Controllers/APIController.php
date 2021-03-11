@@ -57,7 +57,6 @@ class APIController extends Controller
         return  response()->json(['error' => 'Error 500'], 500);
     }
 
-
     public function updateAreaCoordinatesSVG(Request $request)
     {
         $update = Areas::where('id', $request->id)
